@@ -29,19 +29,19 @@ First register a new Client:
 client = GoogleGeocodings::Client.new(API_KEY)
 ```
 
-retrieve geometry & address by address
+retrieve geometry by address
 ```ruby
-client.geocode_by_address("1600 Amphitheatre Parkway, Mountain View, CA")
+client.geocode("1600 Amphitheatre Parkway, Mountain View, CA")
 ```
 
-retrieve geometry & address by geometry
+retrieve address by geometry(latitude, longitude)
 ```ruby
-client.geocode_by_latlng("37.4230474802915", "-122.0843128697085")
+client.reverse_geocode("37.4230474802915", "-122.0843128697085")
 ```
 
 change langauge (ex: ja), response ja data
 ```ruby
-client.geocode_by_address("秋田県大館市御成町１丁目３−１", language: 'ja')
+client.geocode("秋田県大館市御成町１丁目３−１", language: 'ja')
 ```
 
 ### Response
