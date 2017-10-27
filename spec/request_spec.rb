@@ -3,18 +3,19 @@ require 'spec_helper'
 describe GoogleGeocodings::Request do
   let(:api_key) { "api_key" }
 
-  describe "::geocode" do
+  describe "::request" do
     context "success" do
+      let(:address) { "北海道帯広市東3条南2-1" }
+      let(:language) { "ja" }
       before do
-        stub_request(:any, %r{#{GoogleGeocodings::Request::GEOCODE_URL}.*}).to_return(
+        stub_request(:get, GoogleGeocodings::Request::GEOCODE_URL).with(query: { address: address, key: api_key, language: language })
+        .to_return(
           status: 200,
           headers: { 'Content-Type' =>  'application/json' },
           body: File.read("#{GoogleGeocodings.root}/spec/fixtures/geocode_success.json")
         )
       end
-      let(:address) { "北海道帯広市東3条南2-1" }
-      let(:language) { "ja" }
-      it "should request geocode" do
+      it "should request" do
         response = GoogleGeocodings::Request.geocode({ address: address, key: api_key, language: language })
         expect(response['results'].size).to eq 1
         response['results'].map do |result|

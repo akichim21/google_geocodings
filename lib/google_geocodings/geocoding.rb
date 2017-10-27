@@ -13,31 +13,5 @@ module GoogleGeocodings
     def [] (key)
       send(key)
     end
-
-    def self.geocode(api_key, address, options = {})
-      language  = options.delete(:language)
-      region    = options.delete(:region)
-      bounds    = options.delete(:bounds)
-
-      options = {
-        key: api_key,
-        address: address,
-        language: language,
-        region: region,
-        bounds: bounds
-      }
-      self.request(:geocode, options)
-    end
-
-    def self.request(method, options)
-      results = []
-
-      response = Request.send(method, options)
-      response['results'].each do |result|
-        results << self.new(result, options[:key])
-      end
-
-      results
-    end
   end
 end

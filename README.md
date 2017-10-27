@@ -1,8 +1,9 @@
 # GoogleGeocodings
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/google_geocodings`. To experiment with that code, run `bin/console` for an interactive prompt.
+This gem provides a Ruby wrapper around the Google Geocodings API, using HTTParty. At this moment the gem does not support OAuth authentication and will only work with an API key.
 
-TODO: Delete this and the text above, and describe your gem
+## Obtaining an API key
+To be able to use this gem, you'll need a Google Places API key. To request an API key, point your browser to code.google.com/apis/console and follow the instructions there. You'll find your API key on the *API Access* tab under *Simple API Access*.
 
 ## Installation
 
@@ -21,8 +22,35 @@ Or install it yourself as:
     $ gem install google_geocodings
 
 ## Usage
+### Request
 
-TODO: Write usage instructions here
+First register a new Client:
+```ruby
+client = GoogleGeocodings::Client.new(API_KEY)
+```
+
+retrieve geometry & address by address
+```ruby
+client.geocode_by_address("1600 Amphitheatre Parkway, Mountain View, CA")
+```
+
+retrieve geometry & address by geometry
+```ruby
+client.geocode_by_latlng("37.4230474802915", "-122.0843128697085")
+```
+
+change langauge (ex: ja), response ja data
+```ruby
+client.geocode_by_address("秋田県大館市御成町１丁目３−１", language: 'ja')
+```
+
+### Response
+response
+* GoogleGeocodings::Geocoding[]
+
+GoogleGeocodings::Geocoding attribute
+* types[], formatted_address, address_components[], postcode_localities[], geometry, partial_match, place_id
+see: https://developers.google.com/maps/documentation/geocoding/intro#GeocodingResponses
 
 ## Development
 
@@ -32,12 +60,8 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/google_geocodings. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/akichim/google_geocodings. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
-## Code of Conduct
-
-Everyone interacting in the GoogleGeocodings project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/google_geocodings/blob/master/CODE_OF_CONDUCT.md).
